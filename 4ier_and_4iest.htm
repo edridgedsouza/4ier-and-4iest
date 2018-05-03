@@ -716,6 +716,332 @@ min      1" nohref="" />
 
 
 
+<p class="Text">
+ We can write a code to take an arbitrary N, and repeat the 4ier/4iest analyses. For the sake of clarity, we will highlight only the 5ier and 5iest transforms, but if this works, then it will work for other bases too. Here, I&rsquo;m essentially taking the previously-written code and refactoring it to take arbitrary numbers, not just 4.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_59.gif" alt="4ier_and_4iest_59.gif" width="1533" height="1445" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_60.png" alt="4ier_and_4iest_60.png" width="958" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_61.gif" alt="4ier_and_4iest_61.gif" width="1128" height="663" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that we&rsquo;ve defined these, let&rsquo;s put them in action for N=5. Once this calculation is complete, we can design a new module that simply produces all of the output plots that we saw before.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_62.gif" alt="4ier_and_4iest_62.gif" width="209" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_63.png" alt="4ier_and_4iest_63.png" width="558" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_64.png" alt="4ier_and_4iest_64.png" width="534" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that the first million 5iers and 5iests are computed, we will create one overarching module that simply outputs all of the expected plots, as well as their timings. Again, we recycle code from the 4ier prototyping. One function for the 5ier analysis, and one for the 5iest analysis.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_65.gif" alt="4ier_and_4iest_65.gif" width="1405" height="1698" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_66.png" alt="4ier_and_4iest_66.png" width="184" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_67.png" alt="4ier_and_4iest_67.png" width="306" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_68.png" alt="4ier_and_4iest_68.png" width="1239" height="44" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_69.gif" alt="4ier_and_4iest_69.gif" width="711" height="363" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_70.gif" alt="4ier_and_4iest_70.gif" width="661" height="388" style="vertical-align:middle;" usemap="#map_70" />
+<map name="map_70">
+<area shape="rect" coords="584,324,619,66" title="max      23
+
+75%      10
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="535,330,570,134" title="max      17
+
+75%      9
+
+median   7
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="486,324,521,88" title="max      21
+
+75%      10
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="438,330,473,111" title="max      19
+
+75%      9
+
+median   7
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="389,324,424,43" title="max      25
+
+75%      11
+
+median   7
+
+25%      3
+
+min      1" nohref="" />
+<area shape="rect" coords="340,330,375,122" title="max      18
+
+75%      9
+
+median   7
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="291,324,326,77" title="max      22
+
+75%      10
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="242,330,277,122" title="max      18
+
+75%      9
+
+median   7
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="193,324,228,54" title="max      24
+
+75%      10
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+<area shape="rect" coords="144,324,179,111" title="max      19
+
+75%      10
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+</map>
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_71.gif" alt="4ier_and_4iest_71.gif" width="1366" height="1362" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_72.gif" alt="4ier_and_4iest_72.gif" width="728" height="429" style="vertical-align:middle;" usemap="#map_72" />
+<map name="map_72">
+<area shape="rect" coords="547,368,598,340" title="max      2
+
+75%      1
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="469,368,520,327" title="max      3
+
+75%      1
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="390,362,441,302" title="max      5
+
+75%      2
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="311,362,362,212" title="max      12
+
+75%      3
+
+median   2
+
+25%      2
+
+min      1" nohref="" />
+<area shape="rect" coords="232,362,283,47" title="max      25
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="154,368,205,85" title="max      22
+
+75%      9
+
+median   8
+
+25%      6
+
+min      1" nohref="" />
+</map>
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_73.gif" alt="4ier_and_4iest_73.gif" width="894" height="1376" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_74.png" alt="4ier_and_4iest_74.png" width="225" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_75.gif" alt="4ier_and_4iest_75.gif" width="638" height="323" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_76.gif" alt="4ier_and_4iest_76.gif" width="601" height="288" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_77.gif" alt="4ier_and_4iest_77.gif" width="690" height="370" style="vertical-align:middle;" usemap="#map_77" />
+<map name="map_77">
+<area shape="rect" coords="635,354,646,303" title="111117" nohref="" />
+<area shape="rect" coords="621,354,632,304" title="107500" nohref="" />
+<area shape="rect" coords="607,354,618,303" title="109449" nohref="" />
+<area shape="rect" coords="593,354,604,303" title="109996" nohref="" />
+<area shape="rect" coords="579,354,590,304" title="108582" nohref="" />
+<area shape="rect" coords="565,354,576,304" title="107820" nohref="" />
+<area shape="rect" coords="551,354,562,299" title="118348" nohref="" />
+<area shape="rect" coords="537,354,548,294" title="129605" nohref="" />
+<area shape="rect" coords="523,354,534,295" title="128550" nohref="" />
+<area shape="rect" coords="509,354,520,295" title="128442" nohref="" />
+<area shape="rect" coords="495,354,506,299" title="118033" nohref="" />
+<area shape="rect" coords="481,354,492,292" title="133815" nohref="" />
+<area shape="rect" coords="467,354,478,289" title="141355" nohref="" />
+<area shape="rect" coords="453,354,464,284" title="151282" nohref="" />
+<area shape="rect" coords="439,354,450,283" title="153963" nohref="" />
+<area shape="rect" coords="425,354,436,271" title="180482" nohref="" />
+<area shape="rect" coords="411,354,422,225" title="281024" nohref="" />
+<area shape="rect" coords="397,354,408,230" title="270167" nohref="" />
+<area shape="rect" coords="383,354,394,240" title="248617" nohref="" />
+<area shape="rect" coords="369,354,380,237" title="254477" nohref="" />
+<area shape="rect" coords="355,354,366,240" title="249376" nohref="" />
+<area shape="rect" coords="341,354,352,241" title="246710" nohref="" />
+<area shape="rect" coords="327,354,338,225" title="281259" nohref="" />
+<area shape="rect" coords="313,354,324,217" title="299548" nohref="" />
+<area shape="rect" coords="299,354,310,209" title="316845" nohref="" />
+<area shape="rect" coords="285,354,296,156" title="433719" nohref="" />
+<area shape="rect" coords="271,354,282,140" title="468558" nohref="" />
+<area shape="rect" coords="257,354,268,140" title="467350" nohref="" />
+<area shape="rect" coords="243,354,254,122" title="506469" nohref="" />
+<area shape="rect" coords="229,354,240,82" title="595424" nohref="" />
+<area shape="rect" coords="215,354,226,50" title="665057" nohref="" />
+<area shape="rect" coords="201,354,212,353" title="0" nohref="" />
+<area shape="rect" coords="187,354,198,353" title="0" nohref="" />
+<area shape="rect" coords="173,354,184,353" title="0" nohref="" />
+<area shape="rect" coords="159,354,170,353" title="0" nohref="" />
+</map>
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_78.gif" alt="4ier_and_4iest_78.gif" width="717" height="354" style="vertical-align:middle;" usemap="#map_78" />
+<map name="map_78">
+<area shape="rect" coords="662,339,673,133" title="4000212" nohref="" />
+<area shape="rect" coords="649,339,660,145" title="3762500" nohref="" />
+<area shape="rect" coords="636,339,647,147" title="3721266" nohref="" />
+<area shape="rect" coords="622,339,633,152" title="3629868" nohref="" />
+<area shape="rect" coords="609,339,620,160" title="3474624" nohref="" />
+<area shape="rect" coords="596,339,607,166" title="3342420" nohref="" />
+<area shape="rect" coords="582,339,593,156" title="3550440" nohref="" />
+<area shape="rect" coords="569,339,580,145" title="3758545" nohref="" />
+<area shape="rect" coords="556,339,567,153" title="3599400" nohref="" />
+<area shape="rect" coords="542,339,553,160" title="3467934" nohref="" />
+<area shape="rect" coords="529,339,540,180" title="3068858" nohref="" />
+<area shape="rect" coords="516,339,527,166" title="3345375" nohref="" />
+<area shape="rect" coords="502,339,513,164" title="3392520" nohref="" />
+<area shape="rect" coords="489,339,500,159" title="3479486" nohref="" />
+<area shape="rect" coords="476,339,487,164" title="3387186" nohref="" />
+<area shape="rect" coords="462,339,473,143" title="3790122" nohref="" />
+<area shape="rect" coords="449,339,460,49" title="5620480" nohref="" />
+<area shape="rect" coords="436,339,447,74" title="5133173" nohref="" />
+<area shape="rect" coords="422,339,433,108" title="4475106" nohref="" />
+<area shape="rect" coords="409,339,420,116" title="4326109" nohref="" />
+<area shape="rect" coords="396,339,407,133" title="3990016" nohref="" />
+<area shape="rect" coords="382,339,393,148" title="3700650" nohref="" />
+<area shape="rect" coords="369,339,380,136" title="3937626" nohref="" />
+<area shape="rect" coords="356,339,367,138" title="3894124" nohref="" />
+<area shape="rect" coords="342,339,353,143" title="3802140" nohref="" />
+<area shape="rect" coords="329,339,340,93" title="4770909" nohref="" />
+<area shape="rect" coords="316,339,327,97" title="4685580" nohref="" />
+<area shape="rect" coords="302,339,313,122" title="4206150" nohref="" />
+<area shape="rect" coords="289,339,300,130" title="4051752" nohref="" />
+<area shape="rect" coords="276,339,287,124" title="4167968" nohref="" />
+<area shape="rect" coords="262,339,273,133" title="3990342" nohref="" />
+<area shape="rect" coords="249,339,260,338" title="0" nohref="" />
+<area shape="rect" coords="236,339,247,338" title="0" nohref="" />
+<area shape="rect" coords="222,339,233,338" title="0" nohref="" />
+<area shape="rect" coords="209,339,220,338" title="0" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ This demonstrates that our pipeline can efficiently be run for arbitrary N. The total time it took to run for N=5 was 839.672 seconds to find the 5ier and 5iest numbers, 1392.524 seconds for the 5ier visualizations, and 121.828 seconds for the 5iest visualizations. The entire pipeline took 2354.024 seconds, or 39.234 minutes, consistent with what we saw for N=4. For all of the plots, we can interpret the results similarly to how we would interpret them for the N=4 prototype. Within this section, there is a total of 329 lines of code, and the code in this section is sufficient to be used as a reproducible pipeline for arbitrary N from 2 to 36. This effectively establishes a reproducible experimental pipeline for finding the Nier and Niest transforms, as well as generating these exploratory data visualizations.
+</p>
+
+
+
 <p class="Section">
  Benford&rsquo;s Law
 </p>
@@ -723,7 +1049,7 @@ min      1" nohref="" />
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_59.png" alt="4ier_and_4iest_59.png" width="166" height="18" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_79.png" alt="4ier_and_4iest_79.png" width="166" height="18" style="vertical-align:middle" />
 </p>
 
 <p class="Text">
@@ -733,21 +1059,21 @@ min      1" nohref="" />
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_60.gif" alt="4ier_and_4iest_60.gif" width="170" height="42" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_80.gif" alt="4ier_and_4iest_80.gif" width="170" height="42" style="vertical-align:middle" />
 </p>
 
 <p class="Print">
  <a id="Info143733411900-7476066"></a>
- <img src="HTMLFiles/4ier_and_4iest_61.png" alt="4ier_and_4iest_61.png" width="519" height="68" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_81.png" alt="4ier_and_4iest_81.png" width="519" height="68" style="vertical-align:middle" />
 </p>
 
 <p class="Print">
  <a id="Info153733411901-7476066"></a>
- <img src="HTMLFiles/4ier_and_4iest_62.png" alt="4ier_and_4iest_62.png" width="522" height="19" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_82.png" alt="4ier_and_4iest_82.png" width="522" height="19" style="vertical-align:middle" />
 </p>
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_63.gif" alt="4ier_and_4iest_63.gif" width="1132" height="1330" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_83.gif" alt="4ier_and_4iest_83.gif" width="1132" height="1330" style="vertical-align:middle" />
 </p>
 
 <p class="Text">
@@ -757,14 +1083,14 @@ min      1" nohref="" />
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_64.png" alt="4ier_and_4iest_64.png" width="609" height="18" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_84.png" alt="4ier_and_4iest_84.png" width="609" height="18" style="vertical-align:middle" />
 </p>
 
 <p class="Output">
  <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
 <script type="text/javascript">
 var cdf = new cdfplugin();
-cdf.embed('HTMLFiles/4ier_and_4iest_65.cdf', 0, 0);
+cdf.embed('HTMLFiles/4ier_and_4iest_85.cdf', 0, 0);
 </script>
 </p>
 
@@ -775,12 +1101,12 @@ cdf.embed('HTMLFiles/4ier_and_4iest_65.cdf', 0, 0);
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_66.png" alt="4ier_and_4iest_66.png" width="470" height="42" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_86.png" alt="4ier_and_4iest_86.png" width="470" height="42" style="vertical-align:middle" />
 </p>
 
 <p class="Output">
- <img src="HTMLFiles/4ier_and_4iest_67.gif" alt="4ier_and_4iest_67.gif" width="743" height="127" style="vertical-align:middle;" usemap="#map_67" />
-<map name="map_67">
+ <img src="HTMLFiles/4ier_and_4iest_87.gif" alt="4ier_and_4iest_87.gif" width="743" height="127" style="vertical-align:middle;" usemap="#map_87" />
+<map name="map_87">
 <area shape="rect" coords="705,104,708,100" title="0.01035" nohref="" />
 <area shape="rect" coords="701,104,704,100" title="0.01072" nohref="" />
 <area shape="rect" coords="698,104,701,100" title="0.01113" nohref="" />
@@ -903,14 +1229,14 @@ cdf.embed('HTMLFiles/4ier_and_4iest_65.cdf', 0, 0);
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_68.gif" alt="4ier_and_4iest_68.gif" width="625" height="42" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_88.gif" alt="4ier_and_4iest_88.gif" width="625" height="42" style="vertical-align:middle" />
 </p>
 
 <p class="Output">
  <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
 <script type="text/javascript">
 var cdf = new cdfplugin();
-cdf.embed('HTMLFiles/4ier_and_4iest_69.cdf', 0, 0);
+cdf.embed('HTMLFiles/4ier_and_4iest_89.cdf', 0, 0);
 </script>
 </p>
 
@@ -921,14 +1247,14 @@ cdf.embed('HTMLFiles/4ier_and_4iest_69.cdf', 0, 0);
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_70.png" alt="4ier_and_4iest_70.png" width="609" height="18" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_90.png" alt="4ier_and_4iest_90.png" width="609" height="18" style="vertical-align:middle" />
 </p>
 
 <p class="Output">
  <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
 <script type="text/javascript">
 var cdf = new cdfplugin();
-cdf.embed('HTMLFiles/4ier_and_4iest_71.cdf', 0, 0);
+cdf.embed('HTMLFiles/4ier_and_4iest_91.cdf', 0, 0);
 </script>
 </p>
 
@@ -939,14 +1265,14 @@ cdf.embed('HTMLFiles/4ier_and_4iest_71.cdf', 0, 0);
 
 
 <p class="Input">
- <img src="HTMLFiles/4ier_and_4iest_72.png" alt="4ier_and_4iest_72.png" width="610" height="18" style="vertical-align:middle" />
+ <img src="HTMLFiles/4ier_and_4iest_92.png" alt="4ier_and_4iest_92.png" width="610" height="18" style="vertical-align:middle" />
 </p>
 
 <p class="Output">
  <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
 <script type="text/javascript">
 var cdf = new cdfplugin();
-cdf.embed('HTMLFiles/4ier_and_4iest_73.cdf', 0, 0);
+cdf.embed('HTMLFiles/4ier_and_4iest_93.cdf', 0, 0);
 </script>
 </p>
 
