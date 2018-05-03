@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"
+        "HTMLFiles/xhtml-math11-f.dtd">
+
+<!-- Created with the Wolfram Language for Students - Personal Use Only : www.wolfram.com -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>
+  EdridgeDSouza_391_Project (the Wolfram Language for Students - Personal Use Only : www.wolfram.com)
+ </title>
+ <link href="HTMLFiles/4ier_and_4iest.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<p class="Title">
+ Fourier and Fouriest
+</p>
+
+
+
+<p class="Subtitle">
+ Explorations in alternative base representations
+</p>
+
+
+
+<p class="Subsubtitle">
+ Edridge D&rsquo;Souza Final Project<br />Honors 391H with Prof. Manes, Spring 2018
+</p>
+
+
+
+<p class="Section">
+ Introduction
+</p>
+
+
+
+<p class="Text">
+ I started this class with some basic experience in Mathematica (mainly for its plotting capabilities), which I use in my research in the Biochemistry department. As someone who cares about the applied side of mathematics, much of the number theory in this class came as new information to me. Without much formal training in number theory, I became interested in how to use Mathematica to compute things that may not be obvious by hand.<br /><br />As I was searching for ideas for this project, I came upon a strip from the web comic Saturday Morning Breakfast Cereal.<br /><br /><span><span><img src="HTMLFiles/4ier_and_4iest_1.gif" alt="4ier_and_4iest_1.gif" width="412" height="374" style="vertical-align:middle" /></span></span><br />It seems like a fairly ridiculous idea. A play on the idea of a &ldquo;Fourier transform&rdquo; to relate to alternative base representations. However, this is an area where Mathematica can really shine, as it&rsquo;s possible to rapidly convert numbers to alternative base representations. Perhaps, then, Mathematica can allow us to compute 4ier and 4iest transforms of numbers. Once we do this, what interesting patterns may we find? Will there be any patterns at all? Some people on the Internet have already done analyses involving the 4ier and 4iest <span><span><img src="HTMLFiles/4ier_and_4iest_2.png" alt="4ier_and_4iest_2.png" width="92" height="22" style="vertical-align:middle" /></span></span>, but the aim of this project is to extend that and to find patterns.<br /><br />I don&rsquo;t have the formal math background to understand all of the reasons behind the patterns I find. However, I&rsquo;m experienced in data visualization and statistical modeling, so my approach seeks to use data visualization to find patterns. From there, these patterns can theoretically be interpreted from a more number theoretic perspective.
+</p>
+
+
+
+<p class="Section">
+ Background and Goals
+</p>
+
+
+
+<p class="Subsection">
+ Prototyping the 4ier Transforms
+</p>
+
+
+
+<p class="Text">
+ Mathematica natively comes with the function BaseForm[], which allows conversion to other bases.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_3.png" alt="4ier_and_4iest_3.png" width="78" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <a id="Info13732227927-7471673"></a>
+ <img src="HTMLFiles/4ier_and_4iest_4.png" alt="4ier_and_4iest_4.png" width="449" height="19" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ By creating expressions to convert the first <span style='font-style: italic;'>k</span> numbers (for sufficiently large <span style='font-style: italic;'>k</span>) to different bases, we might be able to find 4ier and 4iest transforms for the first <span style='font-style: italic;'>k</span> numbers. The easiest and most generalizable way to count the occurrence of the digit 4 in the resultant representation is to use Mathematica&rsquo;s string processing capabilities. The function ToString[] can convert the alternate-base representation to a searchable string, and the function StringCount[] can search for occurrences of the digit 4 within the resultant string.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_5.png" alt="4ier_and_4iest_5.png" width="78" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <a id="Info23732227930-7471673"></a>
+ <img src="HTMLFiles/4ier_and_4iest_6.png" alt="4ier_and_4iest_6.png" width="550" height="44" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_7.png" alt="4ier_and_4iest_7.png" width="103" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <a id="Info33732227932-7471673"></a>
+ <img src="HTMLFiles/4ier_and_4iest_8.png" alt="4ier_and_4iest_8.png" width="737" height="93" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ The BaseForm[] function contains the limitation that it can only convert numbers from base 2 to base 36. If this prototyping is successful, we can develop a new base representation function that can covert to more bases. We can potentially do this using ASCII characters to represent unique digits. We can use a base-conversion algorithm to convert our base-10 numbers to alternative forms. In imperative Python-style pseudocode style, we can define an <span><span><img src="HTMLFiles/4ier_and_4iest_9.png" alt="4ier_and_4iest_9.png" width="80" height="22" style="vertical-align:middle" /></span></span> for such a conversion. This is based on the theory of alternate base <span><span><img src="HTMLFiles/4ier_and_4iest_10.png" alt="4ier_and_4iest_10.png" width="68" height="22" style="vertical-align:middle" /></span></span>, in which for a base-b system, the digit d in the n-th position of the number (starting from the right) will be <span><span><img src="HTMLFiles/4ier_and_4iest_11.png" alt="4ier_and_4iest_11.png" width="49" height="20" style="vertical-align:middle" /></span></span>.
+</p>
+
+
+
+<p class="Text">
+ <span style='font-family: Courier;'>function ConvertBases (decimalNum, newBase) :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;while decimalNum != 0 :<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quotient, remainder = DivideWithRemainder (decimalNum, newBase)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = string (remainder) + result<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decimalNum = quotient<br />&nbsp;&nbsp;&nbsp;&nbsp;return integer (result)</span>
+</p>
+
+
+
+<p class="Text">
+ <br />Such an extension will be necessary only once we have already gotten some results for bases 2 through 36. Once we have done this as a proof of concept, we can generalize to higher bases and repeat our analysis. For now, we will focus on gathering data just for bases 2 through 36.<br /><br />Once we have established 4ier and 4iest transforms for the first <span style='font-style: italic;'>k </span>numbers, we can use Mathematica's plotting capabilities to visualize and determine the relationship, if any, between the number we test and the number of 4's in its 4iest transform. We can also try to determine a relationship between the number and the base <span style='font-style: italic;'>b</span> of its 4iest transform.
+</p>
+
+
+
+<p class="Subsection">
+ Extension: The N-ier and N-iest transforms
+</p>
+
+
+
+<p class="Text">
+ Generalizing the 4ier and 4iest transforms to other bases, we can find the N-ier and N-iest transforms, for N from 1 to 35. Again, as with the 4ier and 4iest transforms, once we have prototyped all of these goals, we can repeat them with higher bases and explore more patterns. For now, we should focus on simply getting results from Mathematica&rsquo;s native BaseForm[] function.<br /><br />For each number from 1 to <span style='font-style: italic;'>k</span>, for arbitrarily large <span style='font-style: italic;'>k</span>, we will compute change-of-base for bases 2 through 36, and then find which base will provide the Nier and Niest transforms for N from 1 through 35. Once this is computed, we can do similar visualization methods as before. For each number <span style='font-style: italic;'>N</span>, we can graphically determine a relationship between the number being converted and the number of occurrences of N in its Niest transform. We can also see the relationship between the number and the base <span style='font-style: italic;'>b</span> of its Niest transform
+</p>
+
+
+
+<p class="Subsection">
+ Benford&rsquo;s Law
+</p>
+
+
+
+<p class="Text">
+ Benford&rsquo;s Law is based on an observation that the first digits of certain sequences are not uniformly distributed from 1 to 9, and that rather, the number 1 seems to be significantly more <span><span><img src="HTMLFiles/4ier_and_4iest_12.png" alt="4ier_and_4iest_12.png" width="74" height="22" style="vertical-align:middle" /></span></span>. This law was first observed in the days of logarithm tables, when Simon Newcomb noticed that the pages corresponding to the logarithms starting with 1 were more worn, and therefore more common, than logarithms starting with any other digit. If the first digit of base-n logarithms were evenly distributed, we might expect that the first digit d would be uniformly distributed such that <span style='font-style: italic;'>d</span> &#62418; Uni(1, n-1). <br /><br />However, in a base-b representation of a sequence known to follow Benford&rsquo;s Law, the actual probability distribution of a given digit <span style='font-style: italic;'>d</span> being the first digit for a number in the sequence will be given by: 
+</p>
+
+
+
+<p class='Text' style='text-align: center;'>
+ <span style='font-style: italic;'>P(d) = </span><span><span><img src="HTMLFiles/4ier_and_4iest_13.png" alt="4ier_and_4iest_13.png" width="28" height="20" style="vertical-align:middle" /></span></span>(1 + <span><span><img src="HTMLFiles/4ier_and_4iest_14.png" alt="4ier_and_4iest_14.png" width="13" height="37" style="vertical-align:middle" /></span></span>).
+</p>
+
+
+
+<p class="Text">
+ Certain sequences are known to follow Benford&rsquo;s Law, including the Fibonacci Sequence, the powers of 2, and the <span><span><img src="HTMLFiles/4ier_and_4iest_15.png" alt="4ier_and_4iest_15.png" width="86" height="22" style="vertical-align:middle" /></span></span>.&nbsp;&nbsp;The objective of this section of the project will be to convert each of these sequences from base 2 through base 36 using Mathematica's BaseForm[] function, and then use Mathematica's plotting capabilities to visualize how these sequences follow Benford's Law in other bases. Future extensions include visualizing Benford's Law for higher bases, using our custom base-conversion function.
+</p>
+
+
+
+<p class="Section">
+ The 4ier and 4iest Transforms
+</p>
+
+
+
+<p class="Text">
+ First, we should define a procedure for converting a number to base N, for N from 2 to 36, and counting the number of occurrences of the digit 4 in each of the representations. Vectorized code will be attempted, but for certain tasks, modular imperative code will be simplest.<br /><br />First, we will make a function that represents a given number in all the bases from 2 to 36. Then we will convert the representation to a string, and extract only the digits (ignoring the string representation of the base. Finally, we will package the results in a data structure of nested lists. Each element will represent a base (the first sub-element) and a list of its representations in base 2 through 36 (the second sub-element). Testing this on a small number, we can see the form that the results take.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_16.gif" alt="4ier_and_4iest_16.gif" width="1533" height="341" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_17.png" alt="4ier_and_4iest_17.png" width="1183" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ We can now design a function that takes the results of BaseConversionTable[] and then determines which positions are 4ier and which are 4iest.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_18.gif" alt="4ier_and_4iest_18.gif" width="1830" height="640" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ FindFouriers[] will take a maximum number k, and try to find 4ier transforms for each number from 1 to k. Then, it will create nested lists. At the first level, an element will contain the number being tested, and a list of its fourier transforms. Each 4ier transform is in the form of the tuple returned from FourierSearch[].
+</p>
+
+
+
+<p class="Text">
+ Now that we&rsquo;ve defined FindFouriers[], it is trivial to define FindFouriest[]. We simply take the output of FindFouriers[] and select the tuple whose third value, corresponding to the number of 4&rsquo;s, is highest. If a number doesn&rsquo;t have a 4iest transform, we don&rsquo;t return anything. If a number has multiple 4iest transforms, we return them all.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_19.gif" alt="4ier_and_4iest_19.gif" width="863" height="295" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ We can see these functions in action for a small k = 20.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_20.png" alt="4ier_and_4iest_20.png" width="155" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_21.png" alt="4ier_and_4iest_21.png" width="966" height="65" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_22.png" alt="4ier_and_4iest_22.png" width="272" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_23.png" alt="4ier_and_4iest_23.png" width="1035" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that our functions are working, we should decide on a sufficiently large value of k for which to try our analysis on. Let&rsquo;s see how the timing of this operation changes with successively larger values of k. We will use exponentially increasing values of k and fit a linear model to estimate the approximate value of k to use in order to maximize 1.5 hours (5400 seconds) of computation.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_24.gif" alt="4ier_and_4iest_24.gif" width="621" height="203" style="vertical-align:middle" />
+</p>
+
+<table class='Output'>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>1</span></td>
+  <td style='text-align: left;'><span>0.</span></td>
+ </tr>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>10</span></td>
+  <td style='text-align: left;'><span>0.004</span></td>
+ </tr>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>100</span></td>
+  <td style='text-align: left;'><span>0.064</span></td>
+ </tr>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>1000</span></td>
+  <td style='text-align: left;'><span>0.672</span></td>
+ </tr>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>10000</span></td>
+  <td style='text-align: left;'><span>6.716</span></td>
+ </tr>
+ <tr style='vertical-align: baseline;'>
+  <td style='text-align: left;'><span>100000</span></td>
+  <td style='text-align: left;'><span>70.24</span></td>
+ </tr>
+</table>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_25.png" alt="4ier_and_4iest_25.png" width="67" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_26.png" alt="4ier_and_4iest_26.png" width="203" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_27.png" alt="4ier_and_4iest_27.png" width="156" height="26" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ According to this regression, whose fit and <span><span><img src="HTMLFiles/4ier_and_4iest_28.png" alt="4ier_and_4iest_28.png" width="16" height="20" style="vertical-align:middle" /></span></span> are displayed above, we can get about 1.5 hours of computation if we set k to between 6 and 8 million. Now, I attempted to calculate this, but after about 15-20 minutes, my program would invariably start crashing: too many results were stored in memory, and my computer would run out of RAM. Therefore, we can find a limit for <span style='font-style: italic;'>k</span> that will take around 15-20 minutes to solve.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_29.png" alt="4ier_and_4iest_29.png" width="329" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_30.png" alt="4ier_and_4iest_30.png" width="156" height="26" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ According to this regression, a value of k = 1,000,000 will give us approximately 15 minutes of computational time. From the timing model above, it seems that this is approximately O(n) in terms of time, so if we want to do this for larger values of k, we simply need more RAM to hold the results. Calculating the first million numbers&rsquo; 4ier transforms gives us these results.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_31.gif" alt="4ier_and_4iest_31.gif" width="1156" height="134" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_32.png" alt="4ier_and_4iest_32.png" width="558" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that this is computed, we can retrieve it later without rerunning this expensive computation.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_33.gif" alt="4ier_and_4iest_33.gif" width="1180" height="157" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <img src="HTMLFiles/4ier_and_4iest_34.png" alt="4ier_and_4iest_34.png" width="550" height="17" style="vertical-align:middle" />
+</p>
+
+<p class="Subsection">
+ Pattern Visualization of 4ier and 4iest
+</p>
+
+
+
+<p class="Text">
+ Now that we&rsquo;ve gathered the data, we can clear all of the user-defined items in the global namespace, and load only the datasets we&rsquo;re working on for visualization.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_35.png" alt="4ier_and_4iest_35.png" width="166" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Subsubsection">
+ 4ier Visualizations
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_36.png" alt="4ier_and_4iest_36.png" width="541" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ For a representative example, we can look at the 500,000th element in the list of 4ier representations.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_37.png" alt="4ier_and_4iest_37.png" width="253" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_38.png" alt="4ier_and_4iest_38.png" width="1133" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that we see the structure of each element in the list of 4iers, we can graph the number (in base 10) against the number of 4ier representations it has.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_39.png" alt="4ier_and_4iest_39.png" width="713" height="226" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_40.gif" alt="4ier_and_4iest_40.gif" width="747" height="390" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ These results make sense, because as the numbers get bigger, there are more ways to potentially represent them.<br />Next, we can explore the relationship between the final digit of each number in its base 10 form, and the number of 4ier representations it has.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_41.gif" alt="4ier_and_4iest_41.gif" width="1403" height="249" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_42.png" alt="4ier_and_4iest_42.png" width="113" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_43.gif" alt="Graphics:Number of 4ier representations, by final digit" width="492" height="336" style="vertical-align:middle;" usemap="#map_43" />
+<map name="map_43">
+<area shape="rect" coords="433,278,464,93" title="max      20
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="392,278,423,56" title="max      24
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="350,284,381,102" title="max      19
+
+75%      10
+
+median   8
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="309,278,340,56" title="max      24
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="267,284,298,102" title="max      19
+
+75%      10
+
+median   8
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="226,278,257,37" title="max      26
+
+75%      12
+
+median   9
+
+25%      4
+
+min      1" nohref="" />
+<area shape="rect" coords="184,284,215,111" title="max      18
+
+75%      10
+
+median   8
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="143,278,174,56" title="max      24
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="101,284,132,102" title="max      19
+
+75%      10
+
+median   8
+
+25%      7
+
+min      1" nohref="" />
+<area shape="rect" coords="59,278,90,74" title="max      22
+
+75%      11
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ It looks like there is a <span style='font-style: italic;'>much</span> higher variability when the final digit of the number is 4. Furthermore, it looks like the means are slightly higher for even numbers, which are numbers that are more likely to be divisible by 4.<br /><br />Now, we can try to represent the numbers in matrix form, so we can see in heatmap form what the densities are. We won&rsquo;t plot all of the first million 4ier numbers, but only what will conveniently fit in this space.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_44.gif" alt="4ier_and_4iest_44.gif" width="1165" height="571" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_45.png" alt="4ier_and_4iest_45.png" width="42" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_46.gif" alt="Graphics:Heatmap of number of 4ier representations by number" width="956" height="1019" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ From this heatmap, we see some really interesting patterns. With yellow representing high values, green representing medium, and blue representing low, we see some interesting trends in how the base-10 digit frequency affects the number of 4ier representations. For one, the clearest examples are that numbers that contain 4 already. For number in which the first two and last two digits contain the digit 4, there is a clear square of lower values, corresponding to numbers that don&rsquo;t have many 4ier transforms, because they already have many 4&rsquo;s in their base-10 representations. Interestingly, numbers ending in 04 appear to be <span style='font-style: italic;'>more</span> likely to have more 4ier representations. We also see a prominent diagonal line, going from the top right to the bottom left.<br /><br />The results we see from this heatmap correlate well to what we&rsquo;ve seen from the box-and-whiskers plot: that numbers ending in 4 tend to have a higher variability in terms of the number of 4ier transforms they have. There are spots of extreme increase and decrease relative to numbers ending in other digits. There are a few explanations for this phenomenon. First, for numbers that already have many 4&rsquo;s in the base 10 representation, such as 4444 in the middle of the blue-green square, there are very few alternative base representations that would have as many or more 4&rsquo;s. Therefore, two or more 4&rsquo;s in a base 10 representation makes it very unlikely to find any 4ier representations. However, when there is only one 4 in the base 10 representation, we interestingly find a slight <span style='font-style: italic;'>increase</span> in the number of 4ier representations. This is due to how we&rsquo;ve decided to count 4ier representations. If we look at the code, we realize that for a number with 1 or more 4&rsquo;s, an alternate representation is considered 4ier if its number of 4&rsquo;s is greater than <span style='font-style: italic;'>or equal to</span> the number of 4&rsquo;s in base 10. However, if the number has zero 4&rsquo;s, we don&rsquo;t count any of the representations with zero 4&rsquo;s to be equally 4ier, since a number cannot be 4ier than another number if it contains no 4&rsquo;s. Thus, for a base 10 number, the shift from zero 4&rsquo;s to one 4 will slightly increase the number of possible 4ier representations, but the shift from one 4 to two or more 4&rsquo;s will drastically decrease it.<br /><br />To illustrate this concept, we can make a boxplot of the number of 4&rsquo;s in the original base 10 representation, as compared to the number of 4ier representations present. We see results similar to the pattern just described.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_47.gif" alt="4ier_and_4iest_47.gif" width="1065" height="318" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_48.png" alt="4ier_and_4iest_48.png" width="122" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_49.gif" alt="Graphics:Number of 4ier representations by number of 4s in base 10" width="360" height="241" style="vertical-align:middle;" usemap="#map_49" />
+<map name="map_49">
+<area shape="rect" coords="250,197,277,176" title="max      2
+
+75%      1
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="211,197,238,176" title="max      2
+
+75%      1
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="171,191,198,158" title="max      5
+
+75%      2
+
+median   1
+
+25%      1
+
+min      1" nohref="" />
+<area shape="rect" coords="132,191,159,115" title="max      12
+
+75%      4
+
+median   3
+
+25%      2
+
+min      1" nohref="" />
+<area shape="rect" coords="92,197,119,29" title="max      26
+
+75%      12
+
+median   10
+
+25%      8
+
+min      1" nohref="" />
+<area shape="rect" coords="53,197,80,47" title="max      23
+
+75%      10
+
+median   9
+
+25%      7
+
+min      1" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ <br />This is consistent with our observation. The transition from zero to one 4 represents a modest increase, and any additional 4s after that will drastically decrease the number of available 4ier representations. Now that we have completed these exploratory analyses of the 4ier numbers, we can proceed to the 4iest numbers. Once again, we clear the global namespace so that we only load what we need, and then load our Fouriest dataset, before proceeding to our analysis.
+</p>
+
+
+
+<p class="Subsubsection">
+ 4iest visualizations
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_50.gif" alt="4ier_and_4iest_50.gif" width="558" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ For our first plot, we&rsquo;ll simply compare the number against the base of its 4iest representation.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_51.gif" alt="4ier_and_4iest_51.gif" width="686" height="456" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_52.gif" alt="4ier_and_4iest_52.gif" width="629" height="318" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_53.gif" alt="4ier_and_4iest_53.gif" width="642" height="308" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ In these outputs, it is worth observing the upwards curves in the first plot. For the number 1 through 39, these curves correspond approximately to (n-4), indicating that the 4iest representation will generally be in the base that is 4 less than the number.&nbsp;&nbsp;Because we only tested from bases 2 through 36, these upwards curves appear to start repeating once the y-value hits 36. Ostensibly, testing more base representations would allow for a more complete look. However, if this existing pattern held true, we would see that for any number <span style='font-style: italic;'>n</span>, one of its 4ier representations (if not its 4iest representation) would be in base (n-4). This makes sense, because in base (n-4), a number containing zero 4&rsquo;s in base 10 can be represented as 14 in base (n-4), which is equal to 1*(n-4)^1 + 4*(n-4)^0 = n. For most numbers, this single 4 is the 4iest the number can get. As n gets larger, we see other curves corresponding to more complicated representations such as 114 or 140. However, in this first plot, the representation 14 in base (n-4) is the most salient example.<br /><br />Now that we&rsquo;ve examined this distribution, we can see which bases are most likely to product 4iest representations, and determine any present patterns.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_54.gif" alt="4ier_and_4iest_54.gif" width="504" height="410" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_55.png" alt="4ier_and_4iest_55.png" width="113" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_56.gif" alt="Graphics:4iest Bases" width="703" height="427" style="vertical-align:middle;" usemap="#map_56" />
+<map name="map_56">
+<area shape="rect" coords="654,412,667,396" title="8629" nohref="" />
+<area shape="rect" coords="637,412,651,393" title="10406" nohref="" />
+<area shape="rect" coords="621,412,634,392" title="10841" nohref="" />
+<area shape="rect" coords="604,412,617,395" title="9178" nohref="" />
+<area shape="rect" coords="588,412,601,397" title="8227" nohref="" />
+<area shape="rect" coords="571,412,584,393" title="10494" nohref="" />
+<area shape="rect" coords="554,412,568,394" title="9806" nohref="" />
+<area shape="rect" coords="538,412,551,389" title="12580" nohref="" />
+<area shape="rect" coords="521,412,535,397" title="7962" nohref="" />
+<area shape="rect" coords="505,412,518,395" title="9041" nohref="" />
+<area shape="rect" coords="488,412,501,394" title="10039" nohref="" />
+<area shape="rect" coords="471,412,485,401" title="5978" nohref="" />
+<area shape="rect" coords="455,412,468,398" title="7505" nohref="" />
+<area shape="rect" coords="438,412,452,390" title="11808" nohref="" />
+<area shape="rect" coords="422,412,435,370" title="23271" nohref="" />
+<area shape="rect" coords="405,412,418,354" title="32282" nohref="" />
+<area shape="rect" coords="388,412,402,372" title="22262" nohref="" />
+<area shape="rect" coords="372,412,385,365" title="26044" nohref="" />
+<area shape="rect" coords="355,412,369,376" title="19825" nohref="" />
+<area shape="rect" coords="339,412,352,377" title="19343" nohref="" />
+<area shape="rect" coords="322,412,335,383" title="16117" nohref="" />
+<area shape="rect" coords="305,412,319,377" title="19330" nohref="" />
+<area shape="rect" coords="289,412,302,377" title="19273" nohref="" />
+<area shape="rect" coords="272,412,286,368" title="24724" nohref="" />
+<area shape="rect" coords="256,412,269,369" title="24151" nohref="" />
+<area shape="rect" coords="239,412,252,328" title="47163" nohref="" />
+<area shape="rect" coords="223,412,236,336" title="42644" nohref="" />
+<area shape="rect" coords="206,412,219,316" title="53727" nohref="" />
+<area shape="rect" coords="189,412,203,303" title="60810" nohref="" />
+<area shape="rect" coords="173,412,186,235" title="99508" nohref="" />
+<area shape="rect" coords="156,412,169,208" title="114743" nohref="" />
+<area shape="rect" coords="140,412,153,52" title="202275" nohref="" />
+<area shape="rect" coords="123,412,136,411" title="0" nohref="" />
+<area shape="rect" coords="106,412,120,411" title="0" nohref="" />
+<area shape="rect" coords="90,412,103,411" title="0" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ It appears that base 5 is the base that is most likely to product a 4iest representation. This is understandable, since base 5 only contains the digits 0,1,2,3,4 and so we would expect the digit 4 to make up 1/5 of the digits of a base 5 number. Thus, we would expect the digit 4 to be much more frequent in base 5 than in higher bases. We can repeat this analysis by <span style='font-style: italic;'>multiplying</span> the number of 4iest representations by the base b, to account for the extra digits, to see if any bases tend to overrepresent the digit 4.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_57.png" alt="4ier_and_4iest_57.png" width="662" height="111" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_58.gif" alt="4ier_and_4iest_58.gif" width="946" height="502" style="vertical-align:middle;" usemap="#map_58" />
+<map name="map_58">
+<area shape="rect" coords="886,486,902,354" title="310644" nohref="" />
+<area shape="rect" coords="867,486,882,331" title="364210" nohref="" />
+<area shape="rect" coords="847,486,863,329" title="368594" nohref="" />
+<area shape="rect" coords="827,486,843,357" title="302874" nohref="" />
+<area shape="rect" coords="807,486,823,374" title="263264" nohref="" />
+<area shape="rect" coords="787,486,803,348" title="325314" nohref="" />
+<area shape="rect" coords="768,486,783,361" title="294180" nohref="" />
+<area shape="rect" coords="748,486,764,331" title="364820" nohref="" />
+<area shape="rect" coords="728,486,744,391" title="222936" nohref="" />
+<area shape="rect" coords="708,486,724,382" title="244107" nohref="" />
+<area shape="rect" coords="689,486,704,375" title="261014" nohref="" />
+<area shape="rect" coords="669,486,685,422" title="149450" nohref="" />
+<area shape="rect" coords="649,486,665,409" title="180120" nohref="" />
+<area shape="rect" coords="629,486,645,370" title="271584" nohref="" />
+<area shape="rect" coords="609,486,625,268" title="511962" nohref="" />
+<area shape="rect" coords="590,486,605,198" title="677922" nohref="" />
+<area shape="rect" coords="570,486,586,297" title="445240" nohref="" />
+<area shape="rect" coords="550,486,566,276" title="494836" nohref="" />
+<area shape="rect" coords="530,486,546,334" title="356850" nohref="" />
+<area shape="rect" coords="510,486,526,346" title="328831" nohref="" />
+<area shape="rect" coords="491,486,506,376" title="257872" nohref="" />
+<area shape="rect" coords="471,486,487,363" title="289950" nohref="" />
+<area shape="rect" coords="451,486,467,371" title="269822" nohref="" />
+<area shape="rect" coords="431,486,447,349" title="321412" nohref="" />
+<area shape="rect" coords="411,486,427,363" title="289812" nohref="" />
+<area shape="rect" coords="392,486,407,266" title="518793" nohref="" />
+<area shape="rect" coords="372,486,388,305" title="426440" nohref="" />
+<area shape="rect" coords="352,486,368,281" title="483543" nohref="" />
+<area shape="rect" coords="332,486,348,279" title="486480" nohref="" />
+<area shape="rect" coords="312,486,328,190" title="696556" nohref="" />
+<area shape="rect" coords="293,486,308,194" title="688458" nohref="" />
+<area shape="rect" coords="273,486,289,57" title="1011375" nohref="" />
+<area shape="rect" coords="253,486,269,486" title="0" nohref="" />
+<area shape="rect" coords="233,486,249,486" title="0" nohref="" />
+<area shape="rect" coords="214,486,229,486" title="0" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ We now see that there&rsquo;s a slight peak at base 21. Base 5 is still the most frequent, but when we account for the fact that other bases have many possible digits, we see that the digit 4 tends to be more common than expected in bases 19 through 22. There may or may not be any significance to this, but it shows us interesting patterns about the 4iest representations.<br /><br />This concludes our analysis of 4ier and 4iest numbers. We will repeat this analysis an another base, for n=5, to find the 5ier and 5iest numbers. In theory, it should be possible to repeat this analysis for <span style='font-style: italic;'>all</span> bases, but extending the analysis to base 5 will suffice as a proof of principle. Before doing anything else, we should first get an estimate of how long each of the existing 4ier and 4iest analyses took. Based on the timing data as of the time I wrote this:&#8232;<br />Calculating first million 4iers: 761.524 seconds<br />Calculating first million 4iests: 65.08 seconds<br />Plot 1: 37.92 seconds<br />Plot 2: 307.92 seconds<br />Plot 3: 0.328 seconds<br />Plot 4: 1029.66 seconds<br />Plot 5: 23.344 seconds<br />Plot 6: 26.544 seconds<br />Plot 7: 14.596 seconds<br />Plot 8: 0.104 seconds<br /><span style='font-weight: bold;'>Total</span>: 2267.02 seconds (37 minutes, 47 seconds)<br /><br />We can thus expect any repeat to take approximately 40 minutes of computational time. We can now repeat the analysis to find the 5ier and 5iest numbers.<br />
+</p>
+
+
+
+<p class="Section">
+ Nier and Niest Analysis
+</p>
+
+
+
+<p class="Section">
+ Benford&rsquo;s Law
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_59.png" alt="4ier_and_4iest_59.png" width="166" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ We can test different sequences to see whether their first digits follow a Benford Distribution. To do this, we use Mathematica&rsquo;s BenfordDistribution[] function, and set it to the base we are currently testing. We also use DistributionFitTest[], which performs a goodness-of-fit hypothesis test, with the null hypothesis that the observed data isn&rsquo;t significantly different from the Benford Distribution. If we see that the hypothesis test has a p-value <span style='font-style: italic;'>above</span> a given &alpha; significance level (which I will conservatively set to 0.25), then we can <span style='font-style: italic;'>fail to reject</span> the null hypothesis, and declare that the observed digit distribution in a given base is consistent with the Benford Distribution.<br /><br />Our function will take in a function that gives the <span style='font-style: italic;'>i</span>-th value of a sequence
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_60.gif" alt="4ier_and_4iest_60.gif" width="170" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <a id="Info143733411900-7476066"></a>
+ <img src="HTMLFiles/4ier_and_4iest_61.png" alt="4ier_and_4iest_61.png" width="519" height="68" style="vertical-align:middle" />
+</p>
+
+<p class="Print">
+ <a id="Info153733411901-7476066"></a>
+ <img src="HTMLFiles/4ier_and_4iest_62.png" alt="4ier_and_4iest_62.png" width="522" height="19" style="vertical-align:middle" />
+</p>
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_63.gif" alt="4ier_and_4iest_63.gif" width="1132" height="1330" style="vertical-align:middle" />
+</p>
+
+<p class="Text">
+ Now that we&rsquo;ve declared this functionality, we can use Manipulate[] to test all of the bases from 2 through 36, to see whether the first digits of the first 1000 numbers follow a Benford distribution. The p-value is displayed below the check/x mark. In most cases, the p-value is close to 1, and is much higher than the &alpha; cutoff, indicating that the data is consistent with the null hypothesis that the data follows a Benford distribution. However, we will see that for certain bases, the data does <span style='font-style: italic;'>not</span> follow the Benford Distribution.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_64.png" alt="4ier_and_4iest_64.png" width="609" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.embed('HTMLFiles/4ier_and_4iest_65.cdf', 0, 0);
+</script>
+</p>
+
+<p class="Text">
+ Benford&rsquo;s Law states that the Benford Distribution is the limit of the distribution of first digits, as we take more samples. Therefore, increasing the sample size where base=29 will show the distribution of digits more closely follow the Benford Distribution. As we increase our sample size, we see the data more closely resemble the predictions, and we find ourselves failing to reject the null hypothesis.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_66.png" alt="4ier_and_4iest_66.png" width="470" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <img src="HTMLFiles/4ier_and_4iest_67.gif" alt="4ier_and_4iest_67.gif" width="743" height="127" style="vertical-align:middle;" usemap="#map_67" />
+<map name="map_67">
+<area shape="rect" coords="705,104,708,100" title="0.01035" nohref="" />
+<area shape="rect" coords="701,104,704,100" title="0.01072" nohref="" />
+<area shape="rect" coords="698,104,701,100" title="0.01113" nohref="" />
+<area shape="rect" coords="694,104,697,100" title="0.01157" nohref="" />
+<area shape="rect" coords="691,104,694,100" title="0.01203" nohref="" />
+<area shape="rect" coords="688,104,691,100" title="0.01279" nohref="" />
+<area shape="rect" coords="684,104,687,99" title="0.01347" nohref="" />
+<area shape="rect" coords="681,104,684,99" title="0.01412" nohref="" />
+<area shape="rect" coords="678,104,681,99" title="0.01439" nohref="" />
+<area shape="rect" coords="674,104,677,99" title="0.01512" nohref="" />
+<area shape="rect" coords="671,104,674,99" title="0.01594" nohref="" />
+<area shape="rect" coords="667,104,670,98" title="0.01686" nohref="" />
+<area shape="rect" coords="664,104,667,98" title="0.01788" nohref="" />
+<area shape="rect" coords="661,104,664,98" title="0.01903" nohref="" />
+<area shape="rect" coords="657,104,660,97" title="0.0207" nohref="" />
+<area shape="rect" coords="654,104,657,97" title="0.0225" nohref="" />
+<area shape="rect" coords="651,104,654,96" title="0.0236" nohref="" />
+<area shape="rect" coords="647,104,650,96" title="0.02566" nohref="" />
+<area shape="rect" coords="644,104,647,95" title="0.0281" nohref="" />
+<area shape="rect" coords="640,104,643,94" title="0.0311" nohref="" />
+<area shape="rect" coords="637,104,640,93" title="0.0357" nohref="" />
+<area shape="rect" coords="634,104,637,92" title="0.03938" nohref="" />
+<area shape="rect" coords="630,104,633,90" title="0.04546" nohref="" />
+<area shape="rect" coords="627,104,630,88" title="0.0547" nohref="" />
+<area shape="rect" coords="624,104,627,85" title="0.06586" nohref="" />
+<area shape="rect" coords="620,104,623,79" title="0.08585" nohref="" />
+<area shape="rect" coords="617,104,620,69" title="0.12013" nohref="" />
+<area shape="rect" coords="613,104,616,45" title="0.20586" nohref="" />
+<area shape="rect" coords="538,112,541,108" title="0.0089" nohref="" />
+<area shape="rect" coords="533,112,537,108" title="0.0091" nohref="" />
+<area shape="rect" coords="529,112,533,107" title="0.0128" nohref="" />
+<area shape="rect" coords="525,112,528,107" title="0.0132" nohref="" />
+<area shape="rect" coords="521,112,524,106" title="0.0137" nohref="" />
+<area shape="rect" coords="516,112,520,106" title="0.0143" nohref="" />
+<area shape="rect" coords="512,112,516,106" title="0.015" nohref="" />
+<area shape="rect" coords="508,112,511,106" title="0.0157" nohref="" />
+<area shape="rect" coords="504,112,507,107" title="0.0124" nohref="" />
+<area shape="rect" coords="499,112,503,107" title="0.0129" nohref="" />
+<area shape="rect" coords="495,112,499,106" title="0.0136" nohref="" />
+<area shape="rect" coords="491,112,494,106" title="0.0145" nohref="" />
+<area shape="rect" coords="487,112,490,104" title="0.019" nohref="" />
+<area shape="rect" coords="482,112,486,103" title="0.0218" nohref="" />
+<area shape="rect" coords="478,112,482,103" title="0.0232" nohref="" />
+<area shape="rect" coords="474,112,477,102" title="0.0251" nohref="" />
+<area shape="rect" coords="470,112,473,104" title="0.0203" nohref="" />
+<area shape="rect" coords="465,112,469,103" title="0.0219" nohref="" />
+<area shape="rect" coords="461,112,465,102" title="0.0268" nohref="" />
+<area shape="rect" coords="457,112,460,99" title="0.0355" nohref="" />
+<area shape="rect" coords="452,112,456,97" title="0.0395" nohref="" />
+<area shape="rect" coords="448,112,452,99" title="0.0337" nohref="" />
+<area shape="rect" coords="444,112,448,95" title="0.0442" nohref="" />
+<area shape="rect" coords="440,112,443,89" title="0.0615" nohref="" />
+<area shape="rect" coords="435,112,439,91" title="0.057" nohref="" />
+<area shape="rect" coords="431,112,435,78" title="0.094" nohref="" />
+<area shape="rect" coords="427,112,431,69" title="0.1193" nohref="" />
+<area shape="rect" coords="423,112,426,39" title="0.2011" nohref="" />
+<area shape="rect" coords="345,112,348,111" title="0." nohref="" />
+<area shape="rect" coords="340,112,344,111" title="0." nohref="" />
+<area shape="rect" coords="336,112,340,111" title="0." nohref="" />
+<area shape="rect" coords="332,112,335,111" title="0." nohref="" />
+<area shape="rect" coords="328,112,331,101" title="0.029" nohref="" />
+<area shape="rect" coords="323,112,327,98" title="0.036" nohref="" />
+<area shape="rect" coords="319,112,323,98" title="0.038" nohref="" />
+<area shape="rect" coords="315,112,318,97" title="0.039" nohref="" />
+<area shape="rect" coords="311,112,314,111" title="0." nohref="" />
+<area shape="rect" coords="306,112,310,111" title="0." nohref="" />
+<area shape="rect" coords="302,112,306,111" title="0." nohref="" />
+<area shape="rect" coords="298,112,301,111" title="0." nohref="" />
+<area shape="rect" coords="294,112,297,111" title="0." nohref="" />
+<area shape="rect" coords="289,112,293,104" title="0.02" nohref="" />
+<area shape="rect" coords="285,112,289,91" title="0.058" nohref="" />
+<area shape="rect" coords="281,112,284,88" title="0.064" nohref="" />
+<area shape="rect" coords="277,112,280,111" title="0." nohref="" />
+<area shape="rect" coords="272,112,276,111" title="0." nohref="" />
+<area shape="rect" coords="268,112,272,111" title="0." nohref="" />
+<area shape="rect" coords="264,112,267,95" title="0.046" nohref="" />
+<area shape="rect" coords="259,112,263,77" title="0.097" nohref="" />
+<area shape="rect" coords="255,112,259,111" title="0." nohref="" />
+<area shape="rect" coords="251,112,255,111" title="0." nohref="" />
+<area shape="rect" coords="247,112,250,62" title="0.137" nohref="" />
+<area shape="rect" coords="242,112,246,109" title="0.006" nohref="" />
+<area shape="rect" coords="238,112,242,60" title="0.143" nohref="" />
+<area shape="rect" coords="234,112,238,76" title="0.098" nohref="" />
+<area shape="rect" coords="230,112,233,44" title="0.189" nohref="" />
+<area shape="rect" coords="152,112,155,111" title="0." nohref="" />
+<area shape="rect" coords="147,112,151,111" title="0." nohref="" />
+<area shape="rect" coords="143,112,147,111" title="0." nohref="" />
+<area shape="rect" coords="139,112,142,111" title="0." nohref="" />
+<area shape="rect" coords="135,112,138,111" title="0." nohref="" />
+<area shape="rect" coords="130,112,134,111" title="0." nohref="" />
+<area shape="rect" coords="126,112,130,111" title="0." nohref="" />
+<area shape="rect" coords="122,112,125,76" title="0.14" nohref="" />
+<area shape="rect" coords="118,112,121,111" title="0." nohref="" />
+<area shape="rect" coords="113,112,117,111" title="0." nohref="" />
+<area shape="rect" coords="109,112,113,111" title="0." nohref="" />
+<area shape="rect" coords="105,112,108,111" title="0." nohref="" />
+<area shape="rect" coords="101,112,104,111" title="0." nohref="" />
+<area shape="rect" coords="96,112,100,111" title="0." nohref="" />
+<area shape="rect" coords="92,112,96,111" title="0." nohref="" />
+<area shape="rect" coords="88,112,91,76" title="0.14" nohref="" />
+<area shape="rect" coords="84,112,87,111" title="0." nohref="" />
+<area shape="rect" coords="79,112,83,111" title="0." nohref="" />
+<area shape="rect" coords="75,112,79,111" title="0." nohref="" />
+<area shape="rect" coords="71,112,74,111" title="0." nohref="" />
+<area shape="rect" coords="66,112,70,76" title="0.14" nohref="" />
+<area shape="rect" coords="62,112,66,111" title="0." nohref="" />
+<area shape="rect" coords="58,112,62,111" title="0." nohref="" />
+<area shape="rect" coords="54,112,57,91" title="0.08" nohref="" />
+<area shape="rect" coords="49,112,53,96" title="0.06" nohref="" />
+<area shape="rect" coords="45,112,49,76" title="0.14" nohref="" />
+<area shape="rect" coords="41,112,45,109" title="0.01" nohref="" />
+<area shape="rect" coords="37,112,40,38" title="0.29" nohref="" />
+</map>
+</p>
+
+<p class="Text">
+ We therefore see that when the sample size is large enough, the first digits of the Fibonacci numbers will tend to follow a Benford distribution for bases 2 through 36. It is not clear why base 29 has an exception.<br /><br />We can now try our analysis again with the powers of 2, another sequence known to follow Benford&rsquo;s Law. By sampling the first 1,000 numbers of this sequence, we see that Benford&rsquo;s Law is followed in all bases <span style='font-style: italic;'>except </span>for 4, 8, 16, and 32: bases that are powers of 2. We clearly see a relationship between the powers-of-2 sequence and the bases which don&rsquo;t follow Benford&rsquo;s Law at small sample sizes, which means that for the previous example, there may be some relationship between the Fibonacci sequence and the number 29.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_68.gif" alt="4ier_and_4iest_68.gif" width="625" height="42" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.embed('HTMLFiles/4ier_and_4iest_69.cdf', 0, 0);
+</script>
+</p>
+
+<p class="Text">
+ Let&rsquo;s try it on the factorials now! Sample size of 1,000. From what we see, the results generally tend to agree with Benford&rsquo;s distribution if we use the more generous &alpha; value of 0.10, but the p-values tend to be much more variable than in the previous examples. Increased sample size would likely show us finding tighter alignment to the expected distribution.
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_70.png" alt="4ier_and_4iest_70.png" width="609" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.embed('HTMLFiles/4ier_and_4iest_71.cdf', 0, 0);
+</script>
+</p>
+
+<p class="Text">
+ Finally, let&rsquo;s test a distribution known <span style='font-style: italic;'>not</span> to follow Benford&rsquo;s Law. One property that would make a sequence non-Benford would be if its digits were sequential. Therefore, we should expect that the sequence of the first 10,000 numbers or so would be non-Benford!
+</p>
+
+
+
+<p class="Input">
+ <img src="HTMLFiles/4ier_and_4iest_72.png" alt="4ier_and_4iest_72.png" width="610" height="18" style="vertical-align:middle" />
+</p>
+
+<p class="Output">
+ <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.embed('HTMLFiles/4ier_and_4iest_73.cdf', 0, 0);
+</script>
+</p>
+
+<p class="Section">
+ Difficulties and Conclusions
+</p>
+
+
+
+<p class="Subsection">
+ 4ier/4iest and Nier/Niest transforms
+</p>
+
+
+
+<p class="Subsubsection">
+ RAM and storage
+</p>
+
+
+
+<p class="Text">
+ It very quickly became apparent that calculating the 4ier and 4iest transforms for the first N numbers, for arbitrarily large N, quickly yielded problems. As demonstrated in the linear model fit, it would theoretically take about 1.5 hours to calculate the first 6-8 million 4iers and 4iests, which was the original goal. However, after about 20 minutes of computation, my computer would run out of RAM and the program would abort.<br /><br />To remedy this issue, I initially tried a method of serializing the result for each number into a text file as it was computed, so that the entire calculation results didn&rsquo;t have to be stored in the memory at the same time. I mainly used the functions OpenAppend[] and Write[] as low-level file connection manipulators. Sadly, it turned out that this approach didn&rsquo;t save me any RAM space, presumably because the results were still held in memory even after serialization as long as the file connector was still open. Because Mathematica manages memory automatically, it&rsquo;s difficult to manipulate this.<br /><br />After speaking with Prof. Manes, I realized that limiting my calculation to only the first million numbers would provide more than enough data. It took 12-15 minutes of computation, but after all the graphic analysis was done, the entire pipeline took about 40 minutes for the 4ier and 4iest prototype. It also took about 40 minutes for the final Nier and Niest pipeline, giving a total computational time of about 1 hour and 20 minutes, not including the many hours of failed attempts and re-dos.<br /><br />Because this program tries to be considerate of RAM, it serializes the results to a file, then clears the global state before doing anything new. The advantage of serializing the data like this is that it is easily retrievable later. However, the drawback is that the files are all large (between 0.5 and 1 GB), so they likely aren&rsquo;t practical unless used on a high-performance computing system.<br /><br />On a high-power computer, it would theoretically be possible to run my pipeline on all N for N from 2 to 36. However, with 40 minutes of computation per N, as well as about 0.6 GB of serialization per N, it will require a considerable amount of processing power and space. This is also the reason why I decided only to use Mathematica&rsquo;s native BaseForm[] functionality, rather than stick with my original idea of implementing a base conversion algorithm up to an arbitrarily large base. In theory, it is still possible to represent every number in base 2 through 256, if we use ASCII representations for each digit. However, after actually doing the &ldquo;experiments&rdquo;, it becomes clear that base 2 through 36 is more than enough to provide a large amount of computational time and space. Again, if I had the high-performance computing resources to do it, it might be more feasible. In fact, this analysis alone was so big that after saving it as a PDF, it crashed my viewer when I tried to display the graphs!<br /><br />As someone with a background in research science, data analysis, and statistics, it was interesting to delve into the world of number theory. I still don&rsquo;t know much about the theory of digit frequency in alternate base representations, but perhaps the datasets generated by my functions can be used by people who <span style='font-style: italic;'>do</span> understand the theory. Particularly, I believe that the different visible upwards curves in Plot 5 of my pipeline can be analyzed for patterns, as I briefly attempted to do during the 4iest data analysis. Also, there may be significance in the frequencies shown in Plots 7 and 8; I wasn&rsquo;t able to obtain much significance from the empirical data, but it reveals non-uniform distributions that may be of interest.
+</p>
+
+
+
+<p class="Subsubsection">
+ Algorithmic improvements
+</p>
+
+
+
+<p class="Text">
+ There is little doubt that this process could be sped up by changing the algorithms. Rather than compute a base 2-through-36 conversion every time the pipeline is run, it might be advantageous to convert all the numbers from 1 though 1 billion once, then serialize the results to a file and perform the downstream analyses on the desired subset of the data. This would remove the need for additional computation time during each iteration of the pipeline for each new N, as the base 2-through-36 table should be the same for every number, regardless of which N we want to examine the Nier and Niest transforms for.<br /><br />Additionally, it is unclear how much of the algorithmic inefficiency can be attributed to the coding style that I chose. I attempted to use a hybrid between imperative and functional code, with ample use of nested modules but also Map/Table operations. I know Mathematica primarily as a tool for scientific and statistical calculation, so it can be difficult to get into the philosophy of vectorized code. Non-vectorized code will also work, but changing to a purely functional programming paradigm will likely make it easier to manipulate mathematical logic. In its current state, my code is likely somewhat difficult to follow due to its mixing of different styles. I cannot say for sure whether I blame the quirks of the Wolfram language, or my lack of programming experience within this paradigm. As a non-computer scientist, I&rsquo;ll conservatively pick the latter.
+</p>
+
+
+
+<p class="Subsection">
+ Benford&rsquo;s Law
+</p>
+
+
+
+<p class="Text">
+ This section of the project was much easier to work with, interestingly enough. That&rsquo;s because, for most bases and sequences we tested, it doesn&rsquo;t take much sample size or computational power to demonstrate that the data follows Benford&rsquo;s Distribution. To be precise, we never explicitly tested that the distributions <span style='font-style: italic;'>follow</span> Benford&rsquo;s Distribution; we only declared that we fail to reject the null hypothesis that the sample data comes from a Benford distribution.<br /><br />We observed several patterns. For one, increasing the sample size tends to change the p-values such that we fail to reject the null hypothesis, at least for distributions and bases that follow Benford&rsquo;s Law. Additionally, certain sequences and bases have more variability than others. For the Fibonacci sequence, base 29 produced results that were inconsistent with Benford&rsquo;s Law for small sample sizes, but increasing this eventually shows extremely high p-values, allowing us to fail to reject the null hypothesis. For the powers of 2, all bases except for bases in the form of 2^k, for k&gt;1, produced digit distributions consistent with Benford&rsquo;s Law. We see an obvious connection between the powers of 2 and the non-Benford bases, which leads us to wonder if there are any connections between the Fibonacci sequence and the number 29.<br /><br />The only annoyance during this section of the project was that Mathematica&rsquo;s Manipulate[] function tends to behave weirdly when given large data. It makes the animations jarring. Maybe a way to optimize it would be to export a PNG representation of each plot, rather than the dynamic interactive bar chart itself.<br /><br />While the Benford&rsquo;s Law calculation appears to be generally unrelated to the main analysis of Nier and Niest numbers, it provides an exploration of patterns we can find in alternate base representations of numbers. By using predictions from the Benford Distribution, it may be possible to gain insight about what types of bases are more likely to contain 4ier or 4iest number representations. Once this is determined, we can extend this to Nier and Niest numbers.
+</p>
+
+
+
+<p class="Subsection">
+ Overall
+</p>
+
+
+
+<p class="Text">
+ Much of this analysis must seem rather hand-wavy. Because I don&rsquo;t have the formal training to analytically arrive at these conclusions, I instead opted to find patterns empirically, and then speculate that somebody else may be able to analytically prove these results. This represents a fundamental philosophical difference: analytically, we think of numbers as fixed, but empirically, we think of things as subject to variation. Numbers are, of course, fixed. However, that doesn&rsquo;t mean we can&rsquo;t analyze them using the empiricist&rsquo;s toolkit. Benford&rsquo;s Law has practical applications in forensics, where it&rsquo;s used to detect financial fraud due to deviations from the expected distribution. I come from a tradition of manipulating things and finding the resulting patterns, so each analysis feels like an experiment. Of course, a lot of this data visualization doesn&rsquo;t have much underlying significance. However, that&rsquo;s the job of the data scientist: to play with visualizations in data to find patterns worth exploring. This project was a cursory look into patterns of alternative-base representations, but it still gave a decent amount of insight into the way that numbers work.
+</p>
+
+
+
+<p class="Section">
+ References
+</p>
+
+
+
+<p class="Text">
+ [1] https://www.smbc-comics.com/?id=2874<br />[2] https://normalhuman.github.io/fourier/<br />[3] https://math.stackexchange.com/questions/312640/how-to-solve-for-the-fouriest-number<br />[4] https://calculus7.org/2013/02/09/<br />[5] http://www.cs.trincoll.edu/~ram/cpsc110/inclass/conversions.html<br />[6] Knuth, D. E. &ldquo;Positional Number Systems.&rdquo; Section 4.1 in The Art of Computer Programming, Vol. 2: Seminumerical Algorithms, 3rd ed. Reading, MA: Addison-Wesley, 1998.<br />[7] Benford, F. &ldquo;The Law of Anomalous Numbers.&rdquo; Proceedings of the American Philosophical Society, Vol. 78, No. 4 (Mar. 31, 1938).<br />[8] Kanemitsu S., Nagasaka K., Rauzy G., Shiue JS. (1988) On Benford&rsquo;s law: The first digit problem. In: Watanabe S., Prokhorov J.V. (eds) Probability Theory and Mathematical Statistics. Lecture Notes in Mathematics, vol 1299. Springer, Berlin, Heidelberg<br />[9] https://wwwf.imperial.ac.uk/~nadams/classificationgroup/Benfords-Law.pdf; original at https://archive.is/eYBRE
+</p>
+
+
+
+
+
+
+<div style="font-family:Helvetica; font-size:11px; width:100%; border:1px none #999999; border-top-style:solid; padding-top:2px; margin-top:20px;">
+ <a href="http://www.wolfram.com/language/" style="color:#000; text-decoration:none;">
+  <span style="color:#555555">Created with the Wolfram Language</span> 
+ </a>
+</div>
+</body>
+
+</html>
